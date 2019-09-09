@@ -8,7 +8,7 @@ pipeline{
 		}
 		stage("Start Grid"){
 			steps{
-				bat "docker-compose up -d hub chromenode firefoxnode"
+				bat "docker-compose up -d selenium-hub chromenode firefoxnode"
 			}
 		}
 		stage("Run Test"){
@@ -21,6 +21,7 @@ pipeline{
 		always{
 			archiveArtifacts artifacts: 'output/**'
 			bat "docker-compose down"
+			bat "rmdir /s /q %WORKSPACE%\\output"
 		}
 	}
 }
